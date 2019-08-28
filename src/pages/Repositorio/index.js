@@ -1,7 +1,13 @@
 import React from 'react'
 
-export default function Repositorio(){
+import { Container } from './styles'
+
+// decodeURIComponent(match.params.repositorio)
+
+export default function Repositorio({ match }){
     return(
-        <h1>Repositorio</h1>
+        <Container>
+
+        </Container>
     );
 }
