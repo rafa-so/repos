@@ -109,7 +109,7 @@ export const IssuesList = styled.ul`
     }
 `;
 
-export const PageActions= styled.div`
+export const PageActions = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -126,5 +126,17 @@ export const PageActions= styled.div`
             cursor: not-allowed;
             opacity: 0.5;
         }
+    }
+`;
+
+export const FilterList = styled.div`
+    margin: 15px 0;
+
+    button {
+        outline: 0;
+        border: 0;
+        padding: 8px;
+        border-radius: 4px;
+        margin: 0 3px;
     }
 `;

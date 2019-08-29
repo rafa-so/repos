@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 
 import { Container, Owner, 
     Loading, BackButton, IssuesList,
-    PageActions } from './styles'
+    PageActions, FilterList } from './styles'
 import { FaArrowLeft } from 'react-icons/fa';
 
 import api from '../../services/api';
@@ -13,6 +13,11 @@ export default function Repositorio({ match }){
     const [issues, setIssues]           = useState([]);
     const [loading, setLoading]         = useState(true);
     const [page, setPage]               = useState(1);
+    const [filters, setFilters]         = useState([
+        {state: 'all',    label: 'Todas',    active: true},
+        {state: 'open',   label: 'Abertas',  active: false},
+        {state: 'closed', label: 'Fechadas', active: false},
+    ]);
 
     useEffect(() => {
 
@@ -23,7 +28,7 @@ export default function Repositorio({ match }){
                 api.get(`/repos/${ nomeRepo }`),
                 api.get(`/repos/${ nomeRepo }/issues`, {
                     params: {
-                        state: 'open',
+                        state: filters.find(f => f.active).state,
                         per_page: 5
                     }
                 })
@@ -79,6 +84,15 @@ export default function Repositorio({ match }){
                 <h1> { repositorio.name } </h1>
                 <p> { repositorio.description } </p>
             </Owner>
+
+            <FilterList>
+                { filters.map((filter, index) => (
+                    <button type="button" 
+                        key={ filter.label }>
+
+                    </button>
+                )) }
+            </FilterList>
 
             <IssuesList>
                 { issues.map(issue => (
