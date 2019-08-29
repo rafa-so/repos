@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 
-import { Container } from './styles'
+import { Container, Owner, Loading, BackButton } from './styles'
+import { FaArrowLeft } from 'react-icons/fa';
 
 import api from '../../services/api';
 
@@ -34,9 +35,25 @@ export default function Repositorio({ match }){
         load();
     }, [match.params.repositorio]);
 
+    if (loading) {
+        return(
+            <Loading>
+                <h1>Carregando...</h1>
+            </Loading>
+        );
+    }
+
     return(
         <Container>
-             
+            <BackButton to="/">
+                <FaArrowLeft color="#000" size={ 30 } />
+            </BackButton>
+            <Owner>
+                <img src={ repositorio.owner.avatar_url }
+                    alt={ repositorio.owner.avatar_url } />
+                <h1> { repositorio.name } </h1>
+                <p> { repositorio.description } </p>
+            </Owner>
         </Container>
     );
 }
