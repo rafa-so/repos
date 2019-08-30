@@ -18,6 +18,8 @@ export default function Repositorio({ match }){
         {state: 'open',   label: 'Abertas',  active: false},
         {state: 'closed', label: 'Fechadas', active: false},
     ]);
+    const [filterIndex, setFilterIndex] = useState(0);
+
 
     useEffect(() => {
 
@@ -49,7 +51,7 @@ export default function Repositorio({ match }){
 
             const response = await api.get(`/repos/${nomeRepo}/issues`, {
                 params: {
-                    state: 'open',
+                    state: filters[filterIndex].state,
                     page,
                     per_page: 5,
                 },
@@ -59,10 +61,14 @@ export default function Repositorio({ match }){
         }
 
         loadIssue();
-    }, [match.params.repositorio, page]);
+    }, [filters, filterIndex, match.params.repositorio, page]);
 
     function handlePage(action) {
         setPage(action === 'back' ? page - 1 : page + 1);
+    }
+
+    function handleFilter(index) {
+        setFilterIndex(index);
     }
 
     if (loading) {
@@ -85,11 +91,12 @@ export default function Repositorio({ match }){
                 <p> { repositorio.description } </p>
             </Owner>
 
-            <FilterList>
+            <FilterList active={ filterIndex }>
                 { filters.map((filter, index) => (
                     <button type="button" 
-                        key={ filter.label }>
-
+                        key={ filter.label }
+                        onClick={ () => handleFilter(index) }>
+                        { filter.label }
                     </button>
                 )) }
             </FilterList>

@@ -138,5 +138,10 @@ export const FilterList = styled.div`
         padding: 8px;
         border-radius: 4px;
         margin: 0 3px;
+
+        &:nth-child(${ props => props.active + 1 }) {
+            background: #0071DB;
+            color: #FFF;
+        }
     }
 `;
